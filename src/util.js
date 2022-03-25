@@ -88,7 +88,7 @@ class Util {
         return `function() {\n${indent}  return ${funcRet};\n${indent}}`;
       }
     } else if (firstKey && firstKey.match(strFuncRE)) { // sring function
-      return `'ngentest'`;
+      return `'ngtest'`;
     } else if (firstKey && firstKey.match(arrFuncRE)) { // array function
       const paramArray = Util.getCallExhaustedReturn(obj);
       const paramValues =  [].concat(paramArray).map(el => {
@@ -612,8 +612,8 @@ class Util {
       if (key2 !== 'undefined') {
         const objValue2 = Util.objToJS(value2);
         const jsValue = 
-          objValue2 === `'ngentest'` ? `'${key2}'` :
-          objValue2 === `['ngentest']` ? `['${key2}']` :
+          objValue2 === `'ngtest'` ? `'${key2}'` :
+          objValue2 === `['ngtest']` ? `['${key2}']` :
            `${objValue2}`
         js.push(`${jsValue}`);
       }

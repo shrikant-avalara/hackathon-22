@@ -7,7 +7,7 @@ const requireFromString = require('require-from-string');
 const glob = require('glob');
 const appRoot = require('app-root-path');
 
-const config = require('./ngentest.config');
+const config = require('./ngtest.config');
 const Util = require('./src/util.js');
 const FuncTestGen = require('./src/func-test-gen.js');
 
@@ -35,7 +35,7 @@ const argv = yargs.usage('Usage: $0 <tsFile> [options]')
     'm': { alias: 'method', describe: 'Show code only for this method', type: 'string' },
     'v': { alias: 'verbose', describe: 'log verbose debug messages', type: 'boolean' },
     'framework': { describe: 'test framework, jest or karma', type: 'string' },
-    'c': { alias: 'config', describe: 'The configuration file to load options from', type: 'string', default: 'ngentest.config.js' }
+    'c': { alias: 'config', describe: 'The configuration file to load options from', type: 'string', default: 'ngtest.config.js' }
   })
   .example('$0 my.component.ts', 'generate Angular unit test for my.component.ts')
   .help('h')

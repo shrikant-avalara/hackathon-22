@@ -1,19 +1,19 @@
-# ngentest
+# ngtest
 Angular5,6,7,8+ Unit Test Generator For Components, Directive, Services, and Pipes
 
 ## Install & Run
 ```bash
-$ npm install ngentest -g # to run this command anywhere
-$ ngentest my.component.ts 
-$ ngentest my.directive.ts -s # write unit test to my.directive.spec.ts
-$ ngentest my.directive.ts -c ../ngentest.config.js # use the given config file.
+$ npm install ngtest -g # to run this command anywhere
+$ ngtest my.component.ts 
+$ ngtest my.directive.ts -s # write unit test to my.directive.spec.ts
+$ ngtest my.directive.ts -c ../ngtest.config.js # use the given config file.
 ```
 
 To see the source file and generated examples, please take a look at examples directory.
-https://github.com/allenhwkim/ngentest/tree/master/examples
+https://github.com/allenhwkim/ngtest/tree/master/examples
 
 ## Config
-You can override configuration by creating a file named as `ngentest.config.js` in your application directory and running ngentest from that directory. You can also provide a configuration file using `-c my.config.js`.
+You can override configuration by creating a file named as `ngtest.config.js` in your application directory and running ngtest from that directory. You can also provide a configuration file using `-c my.config.js`.
 
   * **framework**: `jest` or `karma`. The default is `jest`. This value determines how function mock and assert is to be done.
 
@@ -68,16 +68,16 @@ You can override configuration by creating a file named as `ngentest.config.js` 
     }
     ```
 
-  * **includeMatch**: When ngentest runs with a directory, include only these files. e.g.,
+  * **includeMatch**: When ngtest runs with a directory, include only these files. e.g.,
     ```javascript
     includeMatch: [/(component|directive|pipe|service).ts/],
     ````
   
-  * **excludeMatch**: When ngentest runs with a directory, exclude these files. e.g., 
+  * **excludeMatch**: When ngtest runs with a directory, exclude these files. e.g., 
     ```javascript
     excludeMatch: [/.*module.ts$/]
     ```
-  ### Full Example (https://github.com/allenhwkim/ngentest/blob/master/ngentest.config.js)
+  ### Full Example (https://github.com/allenhwkim/ngtest/blob/master/ngtest.config.js)
   ```javascript
   module.exports = {
     framework: 'karma', // or 'jest'
@@ -111,9 +111,9 @@ You can override configuration by creating a file named as `ngentest.config.js` 
       TranslateService: ['translate() {};'],
       EncryptionService: [],
     },
-    // when ngentest runs with a directory, include only these files
+    // when ngtest runs with a directory, include only these files
     includeMatch: [/(component|directive|pipe|service).ts/],
-    // when ngentest runs with a directory, exclude these files
+    // when ngtest runs with a directory, exclude these files
     excludeMatch: []
   }
   ```

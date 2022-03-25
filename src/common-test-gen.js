@@ -313,7 +313,7 @@ function getGenerated (ejsData, options) {
     const allTests = Object.assign({}, ejsData.accessorTests || {}, ejsData.functionTests || {});
     // get only new tests
     for (var method in existingTests) {
-      (existingTests[method] !== true) && newTests.push('  // new test by ngentest' + allTests[method]); 
+      (existingTests[method] !== true) && newTests.push('  // new test by ngtest' + allTests[method]); 
     }
     if (newTests.length) {
       // add new tests at the end

@@ -104,49 +104,39 @@ describe('ExampleComponent', () => {
     component.adjustmentsDetailsCms.location = {
       threshold: {}
     };
-    component.router = component.router || {};
-    component.router.events = observableOf({
-      urlAfterRedirects: 'urlAfterRedirects'
-    });
-    component.menuEl = component.menuEl || {};
-    component.menuEl.nativeElement = {
-      highlightMenu: function() {}
-    };
     component.ngOnInit();
-
+    expect(false).toBe(true);;
   });
 
   it('should run #logout()', async () => {
-    component.authGuardSvc = component.authGuardSvc || {};
-    spyOn(component.authGuardSvc, 'logoff');
+
     component.logout();
-    // expect(component.authGuardSvc.logoff).toHaveBeenCalled();
+    expect(false).toBe(true);;
   });
 
   it('should run #changeLanguage()', async () => {
-    component.cookie = component.cookie || {};
-    spyOn(component.cookie, 'get');
+
     component.changeLanguage({});
-    // expect(component.cookie.get).toHaveBeenCalled();
+    expect(false).toBe(true);;
   });
 
   it('should run #onDeactivate()', async () => {
 
     component.onDeactivate();
-
+    expect(false).toBe(true);;
   });
 
-  // new test by ngentest
   it('should run #testFunction()', async () => {
-    
+
     component.testFunction({});
-    
+    expect(false).toBe(true);;
   });
-  // new test by ngentest
+
   it('should run #testFunction2()', async () => {
     spyOn(component, 'testFunction');
     component.testFunction2({});
     // expect(component.testFunction).toHaveBeenCalled();
-    expect(true).to.be.Falsy(); //added as default assert
+    expect(false).toBe(true);;
   });
+
 });
