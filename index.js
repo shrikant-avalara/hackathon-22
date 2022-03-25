@@ -17,6 +17,8 @@ const InjectableTestGen = require('./src/injectable/injectable-test-gen.js');
 const PipeTestGen = require('./src/pipe/pipe-test-gen.js');
 const ClassTestGen = require('./src/class/class-test-gen.js');
 
+let privateParameters;
+
 const argv = yargs.usage('Usage: $0 <tsFile> [options]')
   .options({
     's': { alias: 'spec', describe: 'write the spec file along with source file', type: 'boolean' },
@@ -55,7 +57,7 @@ if (argv.c && fs.existsSync(path.resolve(argv.c))) {
 Util.DEBUG && console.log('  *** config ***', config);
 
 Util.FRAMEWORK = config.framework || argv.framework;
-console.log(Util.FRAMEWORK);
+//console.log(Util.FRAMEWORK);
 
 function loadConfig(filePath) {
   const userConfig = require(filePath);
@@ -75,8 +77,22 @@ function getFuncMockData (Klass, funcName, funcType) {
   };
   funcTestGen.getExpressionStatements().forEach((expr, ndx) => {
     const code = funcTestGen.classCode.substring(expr.start, expr.end);
-    Util.DEBUG && console.log('  *** EXPRESSION ***', ndx, code.replace(/\n+/g, '').replace(/\s+/g, ' '));
-    funcTestGen.setMockData(expr, funcMockData);
+    let isExpressionPrivate =false;
+  
+    for (let param of privateParameters) {
+      isExpressionPrivate = code.indexOf(param)>-1;
+      if (isExpressionPrivate) break;
+    }
+
+    if (! (isExpressionPrivate && funcType == 'method') ) {
+      
+      Util.DEBUG && console.log('  *** EXPRESSION ***', ndx, code.replace(/\n+/g, '').replace(/\s+/g, ' '));
+      funcTestGen.setMockData(expr, funcMockData);      
+    }
+    else{
+      Util.DEBUG && console.warn('  *** EXPRESSION ***', ndx, code.replace(/\n+/g, '').replace(/\s+/g, ' '));
+    }
+
   });
 
   return funcMockData;
@@ -99,11 +115,13 @@ function getFuncTest(Klass, funcName, funcType, angularType) {
     console.log('\x1b[36m%s\x1b[0m', `\nPROCESSING #${funcName}`);
 
   const funcMockData = getFuncMockData(Klass, funcName, funcType);
+
   const [allFuncMockJS, asserts] = Util.getFuncMockJS(funcMockData, angularType);
   const funcMockJS = [...new Set(allFuncMockJS)];
   const funcParamJS = Util.getFuncParamJS(funcMockData.params);
 
   const funcAssertJS = asserts.map(el => `// expect(${el.join('.')}).toHaveBeenCalled()`);
+  funcAssertJS.push('expect(false).toBe(true);')
   const jsToRun = 
     funcType === 'set' ? `${angularType}.${funcName} = ${funcParamJS || '{}'}`: 
     funcType === 'get' ? `const ${funcName} = ${angularType}.${funcName}` : 
@@ -129,6 +147,8 @@ function run (tsFile) {
     const typescript = fs.readFileSync(path.resolve(tsFile), 'utf8');
     const angularType = Util.getAngularType(typescript).toLowerCase();
     const {ejsData} = testGenerator.getData();
+
+    privateParameters = testGenerator.privateParameters;
 
     ejsData.config = config;
     // mockData is set after each statement is being analyzed from getFuncMockData

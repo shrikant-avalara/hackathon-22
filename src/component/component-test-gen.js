@@ -24,6 +24,9 @@ class ComponentTestGen {
     this.klassSetters = CommonTestGen.getKlassSetters.bind(this)(),
     this.klassMethods = CommonTestGen.getKlassMethods.bind(this)(),
 
+    this.privateParameters = CommonTestGen.getPrivateParameters.bind(this)(),
+
+
     this.getProviderMocks = CommonTestGen.getProviderMocks.bind(this);
     this.getGenerated = CommonTestGen.getGenerated.bind(this);
     this.writeGenerated = CommonTestGen.writeGenerated.bind(this);

@@ -108,6 +108,16 @@ function getKlass() {
   return klass;
 }
 
+function getPrivateParameters() {
+  const privateNodes = __toArray(this.klass.get('Constructor').get('Parameter'))
+  .filter(p=>p.nodeText.substring("private "))
+  .flatMap(c=> c.children).filter(child=>child.syntaxKind == 'Identifier')
+  .map(id=>id.nodeText);
+
+
+  return privateNodes;
+}
+
 function getAngularType() {
   return (__get(this.klass).decorator || {}).name;
 }
@@ -382,6 +392,8 @@ const CommonGenFunctions = {
   getKlassSetters,
   getKlassMethods,
   getAngularType,
+
+  getPrivateParameters,
 
   getInputMocks, // input coddes
   getOutputMocks, // output codes
